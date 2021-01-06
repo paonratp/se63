@@ -14,30 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntGender,
-    EntGenderFromJSON,
-    EntGenderFromJSONTyped,
-    EntGenderToJSON,
     EntHistorytaking,
     EntHistorytakingFromJSON,
     EntHistorytakingFromJSONTyped,
     EntHistorytakingToJSON,
-    EntMedicalrecordstaff,
-    EntMedicalrecordstaffFromJSON,
-    EntMedicalrecordstaffFromJSONTyped,
-    EntMedicalrecordstaffToJSON,
-    EntPatientrights,
-    EntPatientrightsFromJSON,
-    EntPatientrightsFromJSONTyped,
-    EntPatientrightsToJSON,
-    EntPrename,
-    EntPrenameFromJSON,
-    EntPrenameFromJSONTyped,
-    EntPrenameToJSON,
-    EntTreatment,
-    EntTreatmentFromJSON,
-    EntTreatmentFromJSONTyped,
-    EntTreatmentToJSON,
 } from './';
 
 /**
@@ -47,41 +27,11 @@ import {
  */
 export interface EntPatientrecordEdges {
     /**
-     * 
-     * @type {EntGender}
-     * @memberof EntPatientrecordEdges
-     */
-    gender?: EntGender;
-    /**
      * Historytaking holds the value of the historytaking edge.
      * @type {Array<EntHistorytaking>}
      * @memberof EntPatientrecordEdges
      */
     historytaking?: Array<EntHistorytaking>;
-    /**
-     * 
-     * @type {EntMedicalrecordstaff}
-     * @memberof EntPatientrecordEdges
-     */
-    medicalrecordstaff?: EntMedicalrecordstaff;
-    /**
-     * PatientrecordPatientrights holds the value of the PatientrecordPatientrights edge.
-     * @type {Array<EntPatientrights>}
-     * @memberof EntPatientrecordEdges
-     */
-    patientrecordPatientrights?: Array<EntPatientrights>;
-    /**
-     * 
-     * @type {EntPrename}
-     * @memberof EntPatientrecordEdges
-     */
-    prename?: EntPrename;
-    /**
-     * Treatment holds the value of the treatment edge.
-     * @type {Array<EntTreatment>}
-     * @memberof EntPatientrecordEdges
-     */
-    treatment?: Array<EntTreatment>;
 }
 
 export function EntPatientrecordEdgesFromJSON(json: any): EntPatientrecordEdges {
@@ -94,12 +44,7 @@ export function EntPatientrecordEdgesFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'gender': !exists(json, 'gender') ? undefined : EntGenderFromJSON(json['gender']),
         'historytaking': !exists(json, 'historytaking') ? undefined : ((json['historytaking'] as Array<any>).map(EntHistorytakingFromJSON)),
-        'medicalrecordstaff': !exists(json, 'medicalrecordstaff') ? undefined : EntMedicalrecordstaffFromJSON(json['medicalrecordstaff']),
-        'patientrecordPatientrights': !exists(json, 'patientrecordPatientrights') ? undefined : ((json['patientrecordPatientrights'] as Array<any>).map(EntPatientrightsFromJSON)),
-        'prename': !exists(json, 'prename') ? undefined : EntPrenameFromJSON(json['prename']),
-        'treatment': !exists(json, 'treatment') ? undefined : ((json['treatment'] as Array<any>).map(EntTreatmentFromJSON)),
     };
 }
 
@@ -112,12 +57,7 @@ export function EntPatientrecordEdgesToJSON(value?: EntPatientrecordEdges | null
     }
     return {
         
-        'gender': EntGenderToJSON(value.gender),
         'historytaking': value.historytaking === undefined ? undefined : ((value.historytaking as Array<any>).map(EntHistorytakingToJSON)),
-        'medicalrecordstaff': EntMedicalrecordstaffToJSON(value.medicalrecordstaff),
-        'patientrecordPatientrights': value.patientrecordPatientrights === undefined ? undefined : ((value.patientrecordPatientrights as Array<any>).map(EntPatientrightsToJSON)),
-        'prename': EntPrenameToJSON(value.prename),
-        'treatment': value.treatment === undefined ? undefined : ((value.treatment as Array<any>).map(EntTreatmentToJSON)),
     };
 }
 

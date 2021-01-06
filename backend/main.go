@@ -236,6 +236,22 @@ func main() {
 			SetDepartment(d.Department).
 			Save(context.Background())
 	}
+
+	//Set Patientrecord data
+	patientrecords := Patientrecords{
+		Patientrecord: []Patientrecord{
+			Patientrecord{"a"},
+			Patientrecord{"b"},
+			Patientrecord{"c"},
+		},
+	}
+
+	for _,  p:= range patientrecords.Patientrecord {
+		client.Patientrecord.
+		Create().
+		SetName(p.Name).
+		Save(context.Background())
+	}
 	//*******************************************************************
 	
 	//-------------------------------------------------------------------

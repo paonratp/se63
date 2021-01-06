@@ -14,10 +14,6 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntDoctorinfo,
-    EntDoctorinfoFromJSON,
-    EntDoctorinfoFromJSONTyped,
-    EntDoctorinfoToJSON,
     EntHistorytaking,
     EntHistorytakingFromJSON,
     EntHistorytakingFromJSONTyped,
@@ -30,12 +26,6 @@ import {
  * @interface EntDepartmentEdges
  */
 export interface EntDepartmentEdges {
-    /**
-     * Department2doctorinfo holds the value of the department2doctorinfo edge.
-     * @type {Array<EntDoctorinfo>}
-     * @memberof EntDepartmentEdges
-     */
-    department2doctorinfo?: Array<EntDoctorinfo>;
     /**
      * Historytaking holds the value of the historytaking edge.
      * @type {Array<EntHistorytaking>}
@@ -54,7 +44,6 @@ export function EntDepartmentEdgesFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'department2doctorinfo': !exists(json, 'department2doctorinfo') ? undefined : ((json['department2doctorinfo'] as Array<any>).map(EntDoctorinfoFromJSON)),
         'historytaking': !exists(json, 'historytaking') ? undefined : ((json['historytaking'] as Array<any>).map(EntHistorytakingFromJSON)),
     };
 }
@@ -68,7 +57,6 @@ export function EntDepartmentEdgesToJSON(value?: EntDepartmentEdges | null): any
     }
     return {
         
-        'department2doctorinfo': value.department2doctorinfo === undefined ? undefined : ((value.department2doctorinfo as Array<any>).map(EntDoctorinfoToJSON)),
         'historytaking': value.historytaking === undefined ? undefined : ((value.historytaking as Array<any>).map(EntHistorytakingToJSON)),
     };
 }

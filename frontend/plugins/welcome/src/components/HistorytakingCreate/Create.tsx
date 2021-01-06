@@ -212,17 +212,17 @@ const handleChange = (
   return (
     <Page theme={pageTheme.home}>
       <Header
-      title={`${profile.givenName || 'BILL SYSTEM'}`}
-      subtitle="BLUE MOON DORMITORY"
+      title={`${profile.givenName || 'Historytaking SYSTEM'}`}
+      subtitle="BLUE MOON HOSPITAL"
      ></Header>
       <Content>
-      <ContentHeader title="CREATE BILL TABLE">
+      <ContentHeader title="CREATE Historytaking TABLE">
       </ContentHeader>
         <div className={classes.root}>
         <form noValidate autoComplete="off">
 
 
-          
+      <Grid item xs={6}>   
        <div className={classes.root}>
           <form noValidate autoComplete="off">
           <FormControl variant="filled" className={classes.formControl}>
@@ -360,7 +360,7 @@ const handleChange = (
           </FormControl>
           </form>
        </div>
-
+       </Grid>
           <FormControl
                 className={classes.margin}
                 variant="outlined"
@@ -374,7 +374,7 @@ const handleChange = (
                   name="nurse"
                   value={Historytaking.nurse}
                   onChange={handleChange}
-                  style={{ width: 400 }}
+                  style={{ width: 250 }}
                 >
                 {nurses.map((item: EntNurse) => (
                   <MenuItem value={item.id}>{item.id}</MenuItem>
@@ -397,7 +397,7 @@ const handleChange = (
                   name="symptomseverity"
                   value={Historytaking.symptomseverity}
                   onChange={handleChange}
-                  style={{ width: 400 }}
+                  style={{ width: 250 }}
                 >
                 {symptomseveritys.map((item: any) => (
                   <MenuItem value={item.id}>{item.id}</MenuItem>
@@ -420,7 +420,7 @@ const handleChange = (
                   name="department"
                   value={Historytaking.department}
                   onChange={handleChange}
-                  style={{ width: 400 }}
+                  style={{ width: 250 }}
                 >
                 {departments.map((item: any) => (
                   <MenuItem value={item.id}>{item.id}</MenuItem>
@@ -444,7 +444,7 @@ const handleChange = (
                   name="patientrecord"
                   value={Historytaking.patientrecord}
                   onChange={handleChange}
-                  style={{ width: 400 }}
+                  style={{ width: 250 }}
                 >
                 {patientrecords.map((item: any) => (
                   <MenuItem value={item.id}>{item.id}</MenuItem>
@@ -454,7 +454,7 @@ const handleChange = (
                 </Typography>
               </FormControl>
               <br/>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
               <Typography align = "center">
                     <TextField
                       className={classes.formControl}
@@ -464,7 +464,7 @@ const handleChange = (
                       type="datetime-local"
                       value={Historytaking.datetime}
                       onChange={handleChange}
-                      style={{ width: 400 }}
+                      style={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,
                       }}

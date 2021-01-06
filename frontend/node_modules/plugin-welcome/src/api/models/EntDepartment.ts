@@ -1,4 +1,4 @@
-/* tslint:disable */EntDepartment
+/* tslint:disable */
 /* eslint-disable */
 /**
  * SUT SA Example API
@@ -14,7 +14,7 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    Edges,
+    EntDepartmentEdges,
     EntDepartmentEdgesFromJSON,
     EntDepartmentEdgesFromJSONTyped,
     EntDepartmentEdgesToJSON,

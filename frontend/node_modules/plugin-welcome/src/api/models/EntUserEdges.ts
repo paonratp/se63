@@ -14,26 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntDoctorinfo,
-    EntDoctorinfoFromJSON,
-    EntDoctorinfoFromJSONTyped,
-    EntDoctorinfoToJSON,
-    EntFinancier,
-    EntFinancierFromJSON,
-    EntFinancierFromJSONTyped,
-    EntFinancierToJSON,
-    EntMedicalrecordstaff,
-    EntMedicalrecordstaffFromJSON,
-    EntMedicalrecordstaffFromJSONTyped,
-    EntMedicalrecordstaffToJSON,
     EntNurse,
     EntNurseFromJSON,
     EntNurseFromJSONTyped,
     EntNurseToJSON,
-    EntPatientrights,
-    EntPatientrightsFromJSON,
-    EntPatientrightsFromJSONTyped,
-    EntPatientrightsToJSON,
 } from './';
 
 /**
@@ -44,34 +28,10 @@ import {
 export interface EntUserEdges {
     /**
      * 
-     * @type {EntFinancier}
-     * @memberof EntUserEdges
-     */
-    financier?: EntFinancier;
-    /**
-     * 
      * @type {EntNurse}
      * @memberof EntUserEdges
      */
     historytaking?: EntNurse;
-    /**
-     * 
-     * @type {EntMedicalrecordstaff}
-     * @memberof EntUserEdges
-     */
-    medicalrecordstaff?: EntMedicalrecordstaff;
-    /**
-     * 
-     * @type {EntDoctorinfo}
-     * @memberof EntUserEdges
-     */
-    user2doctorinfo?: EntDoctorinfo;
-    /**
-     * 
-     * @type {EntPatientrights}
-     * @memberof EntUserEdges
-     */
-    userPatientrights?: EntPatientrights;
 }
 
 export function EntUserEdgesFromJSON(json: any): EntUserEdges {
@@ -84,11 +44,7 @@ export function EntUserEdgesFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'financier': !exists(json, 'financier') ? undefined : EntFinancierFromJSON(json['financier']),
         'historytaking': !exists(json, 'historytaking') ? undefined : EntNurseFromJSON(json['historytaking']),
-        'medicalrecordstaff': !exists(json, 'medicalrecordstaff') ? undefined : EntMedicalrecordstaffFromJSON(json['medicalrecordstaff']),
-        'user2doctorinfo': !exists(json, 'user2doctorinfo') ? undefined : EntDoctorinfoFromJSON(json['user2doctorinfo']),
-        'userPatientrights': !exists(json, 'userPatientrights') ? undefined : EntPatientrightsFromJSON(json['userPatientrights']),
     };
 }
 
@@ -101,11 +57,7 @@ export function EntUserEdgesToJSON(value?: EntUserEdges | null): any {
     }
     return {
         
-        'financier': EntFinancierToJSON(value.financier),
         'historytaking': EntNurseToJSON(value.historytaking),
-        'medicalrecordstaff': EntMedicalrecordstaffToJSON(value.medicalrecordstaff),
-        'user2doctorinfo': EntDoctorinfoToJSON(value.user2doctorinfo),
-        'userPatientrights': EntPatientrightsToJSON(value.userPatientrights),
     };
 }
 
