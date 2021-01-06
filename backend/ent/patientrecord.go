@@ -5,13 +5,9 @@ package ent
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/facebookincubator/ent/dialect/sql"
-	"github.com/team10/app/ent/gender"
-	"github.com/team10/app/ent/medicalrecordstaff"
 	"github.com/team10/app/ent/patientrecord"
-	"github.com/team10/app/ent/prename"
 )
 
 // Patientrecord is the model entity for the Patientrecord schema.
@@ -21,120 +17,27 @@ type Patientrecord struct {
 	ID int `json:"id,omitempty"`
 	// Name holds the value of the "Name" field.
 	Name string `json:"Name,omitempty"`
-	// Idcardnumber holds the value of the "Idcardnumber" field.
-	Idcardnumber int `json:"Idcardnumber,omitempty"`
-	// Age holds the value of the "Age" field.
-	Age int `json:"Age,omitempty"`
-	// Birthday holds the value of the "Birthday" field.
-	Birthday time.Time `json:"Birthday,omitempty"`
-	// Bloodtype holds the value of the "Bloodtype" field.
-	Bloodtype string `json:"Bloodtype,omitempty"`
-	// Disease holds the value of the "Disease" field.
-	Disease string `json:"Disease,omitempty"`
-	// Allergic holds the value of the "Allergic" field.
-	Allergic string `json:"Allergic,omitempty"`
-	// Phonenumber holds the value of the "Phonenumber" field.
-	Phonenumber int `json:"Phonenumber,omitempty"`
-	// Email holds the value of the "Email" field.
-	Email string `json:"Email,omitempty"`
-	// Home holds the value of the "Home" field.
-	Home string `json:"Home,omitempty"`
-	// Date holds the value of the "Date" field.
-	Date time.Time `json:"Date,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PatientrecordQuery when eager-loading is set.
-	Edges                 PatientrecordEdges `json:"edges"`
-	gender_id             *int
-	medicalrecordstaff_id *int
-	prefix                *int
+	Edges PatientrecordEdges `json:"edges"`
 }
 
 // PatientrecordEdges holds the relations/edges for other nodes in the graph.
 type PatientrecordEdges struct {
-	// Gender holds the value of the gender edge.
-	Gender *Gender
-	// Medicalrecordstaff holds the value of the medicalrecordstaff edge.
-	Medicalrecordstaff *Medicalrecordstaff
-	// Prename holds the value of the prename edge.
-	Prename *Prename
 	// Historytaking holds the value of the historytaking edge.
 	Historytaking []*Historytaking
-	// Treatment holds the value of the treatment edge.
-	Treatment []*Treatment
-	// PatientrecordPatientrights holds the value of the PatientrecordPatientrights edge.
-	PatientrecordPatientrights []*Patientrights
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [6]bool
-}
-
-// GenderOrErr returns the Gender value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e PatientrecordEdges) GenderOrErr() (*Gender, error) {
-	if e.loadedTypes[0] {
-		if e.Gender == nil {
-			// The edge gender was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: gender.Label}
-		}
-		return e.Gender, nil
-	}
-	return nil, &NotLoadedError{edge: "gender"}
-}
-
-// MedicalrecordstaffOrErr returns the Medicalrecordstaff value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e PatientrecordEdges) MedicalrecordstaffOrErr() (*Medicalrecordstaff, error) {
-	if e.loadedTypes[1] {
-		if e.Medicalrecordstaff == nil {
-			// The edge medicalrecordstaff was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: medicalrecordstaff.Label}
-		}
-		return e.Medicalrecordstaff, nil
-	}
-	return nil, &NotLoadedError{edge: "medicalrecordstaff"}
-}
-
-// PrenameOrErr returns the Prename value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e PatientrecordEdges) PrenameOrErr() (*Prename, error) {
-	if e.loadedTypes[2] {
-		if e.Prename == nil {
-			// The edge prename was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: prename.Label}
-		}
-		return e.Prename, nil
-	}
-	return nil, &NotLoadedError{edge: "prename"}
+	loadedTypes [1]bool
 }
 
 // HistorytakingOrErr returns the Historytaking value or an error if the edge
 // was not loaded in eager-loading.
 func (e PatientrecordEdges) HistorytakingOrErr() ([]*Historytaking, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[0] {
 		return e.Historytaking, nil
 	}
 	return nil, &NotLoadedError{edge: "historytaking"}
-}
-
-// TreatmentOrErr returns the Treatment value or an error if the edge
-// was not loaded in eager-loading.
-func (e PatientrecordEdges) TreatmentOrErr() ([]*Treatment, error) {
-	if e.loadedTypes[4] {
-		return e.Treatment, nil
-	}
-	return nil, &NotLoadedError{edge: "treatment"}
-}
-
-// PatientrecordPatientrightsOrErr returns the PatientrecordPatientrights value or an error if the edge
-// was not loaded in eager-loading.
-func (e PatientrecordEdges) PatientrecordPatientrightsOrErr() ([]*Patientrights, error) {
-	if e.loadedTypes[5] {
-		return e.PatientrecordPatientrights, nil
-	}
-	return nil, &NotLoadedError{edge: "PatientrecordPatientrights"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -142,25 +45,6 @@ func (*Patientrecord) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
 		&sql.NullString{}, // Name
-		&sql.NullInt64{},  // Idcardnumber
-		&sql.NullInt64{},  // Age
-		&sql.NullTime{},   // Birthday
-		&sql.NullString{}, // Bloodtype
-		&sql.NullString{}, // Disease
-		&sql.NullString{}, // Allergic
-		&sql.NullInt64{},  // Phonenumber
-		&sql.NullString{}, // Email
-		&sql.NullString{}, // Home
-		&sql.NullTime{},   // Date
-	}
-}
-
-// fkValues returns the types for scanning foreign-keys values from sql.Rows.
-func (*Patientrecord) fkValues() []interface{} {
-	return []interface{}{
-		&sql.NullInt64{}, // gender_id
-		&sql.NullInt64{}, // medicalrecordstaff_id
-		&sql.NullInt64{}, // prefix
 	}
 }
 
@@ -181,108 +65,12 @@ func (pa *Patientrecord) assignValues(values ...interface{}) error {
 	} else if value.Valid {
 		pa.Name = value.String
 	}
-	if value, ok := values[1].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field Idcardnumber", values[1])
-	} else if value.Valid {
-		pa.Idcardnumber = int(value.Int64)
-	}
-	if value, ok := values[2].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field Age", values[2])
-	} else if value.Valid {
-		pa.Age = int(value.Int64)
-	}
-	if value, ok := values[3].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field Birthday", values[3])
-	} else if value.Valid {
-		pa.Birthday = value.Time
-	}
-	if value, ok := values[4].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Bloodtype", values[4])
-	} else if value.Valid {
-		pa.Bloodtype = value.String
-	}
-	if value, ok := values[5].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Disease", values[5])
-	} else if value.Valid {
-		pa.Disease = value.String
-	}
-	if value, ok := values[6].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Allergic", values[6])
-	} else if value.Valid {
-		pa.Allergic = value.String
-	}
-	if value, ok := values[7].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field Phonenumber", values[7])
-	} else if value.Valid {
-		pa.Phonenumber = int(value.Int64)
-	}
-	if value, ok := values[8].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Email", values[8])
-	} else if value.Valid {
-		pa.Email = value.String
-	}
-	if value, ok := values[9].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Home", values[9])
-	} else if value.Valid {
-		pa.Home = value.String
-	}
-	if value, ok := values[10].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field Date", values[10])
-	} else if value.Valid {
-		pa.Date = value.Time
-	}
-	values = values[11:]
-	if len(values) == len(patientrecord.ForeignKeys) {
-		if value, ok := values[0].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field gender_id", value)
-		} else if value.Valid {
-			pa.gender_id = new(int)
-			*pa.gender_id = int(value.Int64)
-		}
-		if value, ok := values[1].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field medicalrecordstaff_id", value)
-		} else if value.Valid {
-			pa.medicalrecordstaff_id = new(int)
-			*pa.medicalrecordstaff_id = int(value.Int64)
-		}
-		if value, ok := values[2].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field prefix", value)
-		} else if value.Valid {
-			pa.prefix = new(int)
-			*pa.prefix = int(value.Int64)
-		}
-	}
 	return nil
-}
-
-// QueryGender queries the gender edge of the Patientrecord.
-func (pa *Patientrecord) QueryGender() *GenderQuery {
-	return (&PatientrecordClient{config: pa.config}).QueryGender(pa)
-}
-
-// QueryMedicalrecordstaff queries the medicalrecordstaff edge of the Patientrecord.
-func (pa *Patientrecord) QueryMedicalrecordstaff() *MedicalrecordstaffQuery {
-	return (&PatientrecordClient{config: pa.config}).QueryMedicalrecordstaff(pa)
-}
-
-// QueryPrename queries the prename edge of the Patientrecord.
-func (pa *Patientrecord) QueryPrename() *PrenameQuery {
-	return (&PatientrecordClient{config: pa.config}).QueryPrename(pa)
 }
 
 // QueryHistorytaking queries the historytaking edge of the Patientrecord.
 func (pa *Patientrecord) QueryHistorytaking() *HistorytakingQuery {
 	return (&PatientrecordClient{config: pa.config}).QueryHistorytaking(pa)
-}
-
-// QueryTreatment queries the treatment edge of the Patientrecord.
-func (pa *Patientrecord) QueryTreatment() *TreatmentQuery {
-	return (&PatientrecordClient{config: pa.config}).QueryTreatment(pa)
-}
-
-// QueryPatientrecordPatientrights queries the PatientrecordPatientrights edge of the Patientrecord.
-func (pa *Patientrecord) QueryPatientrecordPatientrights() *PatientrightsQuery {
-	return (&PatientrecordClient{config: pa.config}).QueryPatientrecordPatientrights(pa)
 }
 
 // Update returns a builder for updating this Patientrecord.
@@ -310,26 +98,6 @@ func (pa *Patientrecord) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", pa.ID))
 	builder.WriteString(", Name=")
 	builder.WriteString(pa.Name)
-	builder.WriteString(", Idcardnumber=")
-	builder.WriteString(fmt.Sprintf("%v", pa.Idcardnumber))
-	builder.WriteString(", Age=")
-	builder.WriteString(fmt.Sprintf("%v", pa.Age))
-	builder.WriteString(", Birthday=")
-	builder.WriteString(pa.Birthday.Format(time.ANSIC))
-	builder.WriteString(", Bloodtype=")
-	builder.WriteString(pa.Bloodtype)
-	builder.WriteString(", Disease=")
-	builder.WriteString(pa.Disease)
-	builder.WriteString(", Allergic=")
-	builder.WriteString(pa.Allergic)
-	builder.WriteString(", Phonenumber=")
-	builder.WriteString(fmt.Sprintf("%v", pa.Phonenumber))
-	builder.WriteString(", Email=")
-	builder.WriteString(pa.Email)
-	builder.WriteString(", Home=")
-	builder.WriteString(pa.Home)
-	builder.WriteString(", Date=")
-	builder.WriteString(pa.Date.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

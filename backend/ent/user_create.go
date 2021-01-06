@@ -9,11 +9,7 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/team10/app/ent/doctorinfo"
-	"github.com/team10/app/ent/financier"
-	"github.com/team10/app/ent/medicalrecordstaff"
 	"github.com/team10/app/ent/nurse"
-	"github.com/team10/app/ent/patientrights"
 	"github.com/team10/app/ent/user"
 )
 
@@ -36,25 +32,6 @@ func (uc *UserCreate) SetPassword(s string) *UserCreate {
 	return uc
 }
 
-// SetFinancierID sets the financier edge to Financier by id.
-func (uc *UserCreate) SetFinancierID(id int) *UserCreate {
-	uc.mutation.SetFinancierID(id)
-	return uc
-}
-
-// SetNillableFinancierID sets the financier edge to Financier by id if the given value is not nil.
-func (uc *UserCreate) SetNillableFinancierID(id *int) *UserCreate {
-	if id != nil {
-		uc = uc.SetFinancierID(*id)
-	}
-	return uc
-}
-
-// SetFinancier sets the financier edge to Financier.
-func (uc *UserCreate) SetFinancier(f *Financier) *UserCreate {
-	return uc.SetFinancierID(f.ID)
-}
-
 // SetHistorytakingID sets the historytaking edge to Nurse by id.
 func (uc *UserCreate) SetHistorytakingID(id int) *UserCreate {
 	uc.mutation.SetHistorytakingID(id)
@@ -72,63 +49,6 @@ func (uc *UserCreate) SetNillableHistorytakingID(id *int) *UserCreate {
 // SetHistorytaking sets the historytaking edge to Nurse.
 func (uc *UserCreate) SetHistorytaking(n *Nurse) *UserCreate {
 	return uc.SetHistorytakingID(n.ID)
-}
-
-// SetUserPatientrightsID sets the UserPatientrights edge to Patientrights by id.
-func (uc *UserCreate) SetUserPatientrightsID(id int) *UserCreate {
-	uc.mutation.SetUserPatientrightsID(id)
-	return uc
-}
-
-// SetNillableUserPatientrightsID sets the UserPatientrights edge to Patientrights by id if the given value is not nil.
-func (uc *UserCreate) SetNillableUserPatientrightsID(id *int) *UserCreate {
-	if id != nil {
-		uc = uc.SetUserPatientrightsID(*id)
-	}
-	return uc
-}
-
-// SetUserPatientrights sets the UserPatientrights edge to Patientrights.
-func (uc *UserCreate) SetUserPatientrights(p *Patientrights) *UserCreate {
-	return uc.SetUserPatientrightsID(p.ID)
-}
-
-// SetMedicalrecordstaffID sets the medicalrecordstaff edge to Medicalrecordstaff by id.
-func (uc *UserCreate) SetMedicalrecordstaffID(id int) *UserCreate {
-	uc.mutation.SetMedicalrecordstaffID(id)
-	return uc
-}
-
-// SetNillableMedicalrecordstaffID sets the medicalrecordstaff edge to Medicalrecordstaff by id if the given value is not nil.
-func (uc *UserCreate) SetNillableMedicalrecordstaffID(id *int) *UserCreate {
-	if id != nil {
-		uc = uc.SetMedicalrecordstaffID(*id)
-	}
-	return uc
-}
-
-// SetMedicalrecordstaff sets the medicalrecordstaff edge to Medicalrecordstaff.
-func (uc *UserCreate) SetMedicalrecordstaff(m *Medicalrecordstaff) *UserCreate {
-	return uc.SetMedicalrecordstaffID(m.ID)
-}
-
-// SetUser2doctorinfoID sets the user2doctorinfo edge to Doctorinfo by id.
-func (uc *UserCreate) SetUser2doctorinfoID(id int) *UserCreate {
-	uc.mutation.SetUser2doctorinfoID(id)
-	return uc
-}
-
-// SetNillableUser2doctorinfoID sets the user2doctorinfo edge to Doctorinfo by id if the given value is not nil.
-func (uc *UserCreate) SetNillableUser2doctorinfoID(id *int) *UserCreate {
-	if id != nil {
-		uc = uc.SetUser2doctorinfoID(*id)
-	}
-	return uc
-}
-
-// SetUser2doctorinfo sets the user2doctorinfo edge to Doctorinfo.
-func (uc *UserCreate) SetUser2doctorinfo(d *Doctorinfo) *UserCreate {
-	return uc.SetUser2doctorinfoID(d.ID)
 }
 
 // Mutation returns the UserMutation object of the builder.
@@ -230,25 +150,6 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		})
 		u.Password = value
 	}
-	if nodes := uc.mutation.FinancierIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
-			Inverse: false,
-			Table:   user.FinancierTable,
-			Columns: []string{user.FinancierColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: financier.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
 	if nodes := uc.mutation.HistorytakingIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
@@ -260,63 +161,6 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: nurse.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := uc.mutation.UserPatientrightsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   user.UserPatientrightsTable,
-			Columns: []string{user.UserPatientrightsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: patientrights.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := uc.mutation.MedicalrecordstaffIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
-			Inverse: false,
-			Table:   user.MedicalrecordstaffTable,
-			Columns: []string{user.MedicalrecordstaffColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: medicalrecordstaff.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := uc.mutation.User2doctorinfoIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
-			Inverse: false,
-			Table:   user.User2doctorinfoTable,
-			Columns: []string{user.User2doctorinfoColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: doctorinfo.FieldID,
 				},
 			},
 		}

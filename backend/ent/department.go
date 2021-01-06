@@ -24,28 +24,17 @@ type Department struct {
 
 // DepartmentEdges holds the relations/edges for other nodes in the graph.
 type DepartmentEdges struct {
-	// Department2doctorinfo holds the value of the department2doctorinfo edge.
-	Department2doctorinfo []*Doctorinfo
 	// Historytaking holds the value of the historytaking edge.
 	Historytaking []*Historytaking
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
-}
-
-// Department2doctorinfoOrErr returns the Department2doctorinfo value or an error if the edge
-// was not loaded in eager-loading.
-func (e DepartmentEdges) Department2doctorinfoOrErr() ([]*Doctorinfo, error) {
-	if e.loadedTypes[0] {
-		return e.Department2doctorinfo, nil
-	}
-	return nil, &NotLoadedError{edge: "department2doctorinfo"}
+	loadedTypes [1]bool
 }
 
 // HistorytakingOrErr returns the Historytaking value or an error if the edge
 // was not loaded in eager-loading.
 func (e DepartmentEdges) HistorytakingOrErr() ([]*Historytaking, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[0] {
 		return e.Historytaking, nil
 	}
 	return nil, &NotLoadedError{edge: "historytaking"}
@@ -77,11 +66,6 @@ func (d *Department) assignValues(values ...interface{}) error {
 		d.Department = value.String
 	}
 	return nil
-}
-
-// QueryDepartment2doctorinfo queries the department2doctorinfo edge of the Department.
-func (d *Department) QueryDepartment2doctorinfo() *DoctorinfoQuery {
-	return (&DepartmentClient{config: d.config}).QueryDepartment2doctorinfo(d)
 }
 
 // QueryHistorytaking queries the historytaking edge of the Department.

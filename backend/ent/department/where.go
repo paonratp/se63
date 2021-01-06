@@ -209,34 +209,6 @@ func DepartmentContainsFold(v string) predicate.Department {
 	})
 }
 
-// HasDepartment2doctorinfo applies the HasEdge predicate on the "department2doctorinfo" edge.
-func HasDepartment2doctorinfo() predicate.Department {
-	return predicate.Department(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(Department2doctorinfoTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, Department2doctorinfoTable, Department2doctorinfoColumn),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasDepartment2doctorinfoWith applies the HasEdge predicate on the "department2doctorinfo" edge with a given conditions (other predicates).
-func HasDepartment2doctorinfoWith(preds ...predicate.Doctorinfo) predicate.Department {
-	return predicate.Department(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(Department2doctorinfoInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, Department2doctorinfoTable, Department2doctorinfoColumn),
-		)
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
 // HasHistorytaking applies the HasEdge predicate on the "historytaking" edge.
 func HasHistorytaking() predicate.Department {
 	return predicate.Department(func(s *sql.Selector) {

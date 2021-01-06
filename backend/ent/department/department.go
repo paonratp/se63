@@ -10,20 +10,11 @@ const (
 	// FieldDepartment holds the string denoting the department field in the database.
 	FieldDepartment = "department"
 
-	// EdgeDepartment2doctorinfo holds the string denoting the department2doctorinfo edge name in mutations.
-	EdgeDepartment2doctorinfo = "department2doctorinfo"
 	// EdgeHistorytaking holds the string denoting the historytaking edge name in mutations.
 	EdgeHistorytaking = "historytaking"
 
 	// Table holds the table name of the department in the database.
 	Table = "departments"
-	// Department2doctorinfoTable is the table the holds the department2doctorinfo relation/edge.
-	Department2doctorinfoTable = "doctorinfos"
-	// Department2doctorinfoInverseTable is the table name for the Doctorinfo entity.
-	// It exists in this package in order to avoid circular dependency with the "doctorinfo" package.
-	Department2doctorinfoInverseTable = "doctorinfos"
-	// Department2doctorinfoColumn is the table column denoting the department2doctorinfo relation/edge.
-	Department2doctorinfoColumn = "department"
 	// HistorytakingTable is the table the holds the historytaking relation/edge.
 	HistorytakingTable = "historytakings"
 	// HistorytakingInverseTable is the table name for the Historytaking entity.

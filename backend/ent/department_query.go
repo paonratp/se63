@@ -13,7 +13,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team10/app/ent/department"
-	"github.com/team10/app/ent/doctorinfo"
 	"github.com/team10/app/ent/historytaking"
 	"github.com/team10/app/ent/predicate"
 )
@@ -27,8 +26,7 @@ type DepartmentQuery struct {
 	unique     []string
 	predicates []predicate.Department
 	// eager-loading edges.
-	withDepartment2doctorinfo *DoctorinfoQuery
-	withHistorytaking         *HistorytakingQuery
+	withHistorytaking *HistorytakingQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -56,24 +54,6 @@ func (dq *DepartmentQuery) Offset(offset int) *DepartmentQuery {
 func (dq *DepartmentQuery) Order(o ...OrderFunc) *DepartmentQuery {
 	dq.order = append(dq.order, o...)
 	return dq
-}
-
-// QueryDepartment2doctorinfo chains the current query on the department2doctorinfo edge.
-func (dq *DepartmentQuery) QueryDepartment2doctorinfo() *DoctorinfoQuery {
-	query := &DoctorinfoQuery{config: dq.config}
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := dq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(department.Table, department.FieldID, dq.sqlQuery()),
-			sqlgraph.To(doctorinfo.Table, doctorinfo.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, department.Department2doctorinfoTable, department.Department2doctorinfoColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(dq.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
 }
 
 // QueryHistorytaking chains the current query on the historytaking edge.
@@ -273,17 +253,6 @@ func (dq *DepartmentQuery) Clone() *DepartmentQuery {
 	}
 }
 
-//  WithDepartment2doctorinfo tells the query-builder to eager-loads the nodes that are connected to
-// the "department2doctorinfo" edge. The optional arguments used to configure the query builder of the edge.
-func (dq *DepartmentQuery) WithDepartment2doctorinfo(opts ...func(*DoctorinfoQuery)) *DepartmentQuery {
-	query := &DoctorinfoQuery{config: dq.config}
-	for _, opt := range opts {
-		opt(query)
-	}
-	dq.withDepartment2doctorinfo = query
-	return dq
-}
-
 //  WithHistorytaking tells the query-builder to eager-loads the nodes that are connected to
 // the "historytaking" edge. The optional arguments used to configure the query builder of the edge.
 func (dq *DepartmentQuery) WithHistorytaking(opts ...func(*HistorytakingQuery)) *DepartmentQuery {
@@ -361,8 +330,7 @@ func (dq *DepartmentQuery) sqlAll(ctx context.Context) ([]*Department, error) {
 	var (
 		nodes       = []*Department{}
 		_spec       = dq.querySpec()
-		loadedTypes = [2]bool{
-			dq.withDepartment2doctorinfo != nil,
+		loadedTypes = [1]bool{
 			dq.withHistorytaking != nil,
 		}
 	)
@@ -385,34 +353,6 @@ func (dq *DepartmentQuery) sqlAll(ctx context.Context) ([]*Department, error) {
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
-	}
-
-	if query := dq.withDepartment2doctorinfo; query != nil {
-		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[int]*Department)
-		for i := range nodes {
-			fks = append(fks, nodes[i].ID)
-			nodeids[nodes[i].ID] = nodes[i]
-		}
-		query.withFKs = true
-		query.Where(predicate.Doctorinfo(func(s *sql.Selector) {
-			s.Where(sql.InValues(department.Department2doctorinfoColumn, fks...))
-		}))
-		neighbors, err := query.All(ctx)
-		if err != nil {
-			return nil, err
-		}
-		for _, n := range neighbors {
-			fk := n.department
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "department" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "department" returned %v for node %v`, *fk, n.ID)
-			}
-			node.Edges.Department2doctorinfo = append(node.Edges.Department2doctorinfo, n)
-		}
 	}
 
 	if query := dq.withHistorytaking; query != nil {

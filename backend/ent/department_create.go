@@ -10,7 +10,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team10/app/ent/department"
-	"github.com/team10/app/ent/doctorinfo"
 	"github.com/team10/app/ent/historytaking"
 )
 
@@ -25,21 +24,6 @@ type DepartmentCreate struct {
 func (dc *DepartmentCreate) SetDepartment(s string) *DepartmentCreate {
 	dc.mutation.SetDepartment(s)
 	return dc
-}
-
-// AddDepartment2doctorinfoIDs adds the department2doctorinfo edge to Doctorinfo by ids.
-func (dc *DepartmentCreate) AddDepartment2doctorinfoIDs(ids ...int) *DepartmentCreate {
-	dc.mutation.AddDepartment2doctorinfoIDs(ids...)
-	return dc
-}
-
-// AddDepartment2doctorinfo adds the department2doctorinfo edges to Doctorinfo.
-func (dc *DepartmentCreate) AddDepartment2doctorinfo(d ...*Doctorinfo) *DepartmentCreate {
-	ids := make([]int, len(d))
-	for i := range d {
-		ids[i] = d[i].ID
-	}
-	return dc.AddDepartment2doctorinfoIDs(ids...)
 }
 
 // AddHistorytakingIDs adds the historytaking edge to Historytaking by ids.
@@ -139,25 +123,6 @@ func (dc *DepartmentCreate) createSpec() (*Department, *sqlgraph.CreateSpec) {
 			Column: department.FieldDepartment,
 		})
 		d.Department = value
-	}
-	if nodes := dc.mutation.Department2doctorinfoIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   department.Department2doctorinfoTable,
-			Columns: []string{department.Department2doctorinfoColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: doctorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := dc.mutation.HistorytakingIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

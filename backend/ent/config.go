@@ -24,28 +24,12 @@ type config struct {
 
 // hooks per client, for fast access.
 type hooks struct {
-	Abilitypatientrights []ent.Hook
-	Bill                 []ent.Hook
-	Department           []ent.Hook
-	Doctorinfo           []ent.Hook
-	Educationlevel       []ent.Hook
-	Financier            []ent.Hook
-	Gender               []ent.Hook
-	Historytaking        []ent.Hook
-	Insurance            []ent.Hook
-	Medicalrecordstaff   []ent.Hook
-	Nurse                []ent.Hook
-	Officeroom           []ent.Hook
-	Patientrecord        []ent.Hook
-	Patientrights        []ent.Hook
-	Patientrightstype    []ent.Hook
-	Paytype              []ent.Hook
-	Prename              []ent.Hook
-	Symptomseverity      []ent.Hook
-	Treatment            []ent.Hook
-	Typetreatment        []ent.Hook
-	Unpaybill            []ent.Hook
-	User                 []ent.Hook
+	Department      []ent.Hook
+	Historytaking   []ent.Hook
+	Nurse           []ent.Hook
+	Patientrecord   []ent.Hook
+	Symptomseverity []ent.Hook
+	User            []ent.Hook
 }
 
 // Options applies the options on the config object.

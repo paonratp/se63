@@ -13,99 +13,14 @@ import (
 	"github.com/team10/app/controllers"
 	_ "github.com/team10/app/docs"
 	"github.com/team10/app/ent"
-	"github.com/team10/app/ent/abilitypatientrights"
 	"github.com/team10/app/ent/user"
 )
 
 // struct By team 10
 //-------------------------------------------------------------------
 
-// Struct By Patientrights System
-//*******************************************************************
 
-// Patientrightstypes defines the struct for the Patientrightstypes
-type Patientrightstypes struct {
-	Patientrightstype []Patientrightstype
-}
 
-// Patientrightstype defines the struct for the Patientrightstype
-type Patientrightstype struct {
-	Permission           string
-	PermissionArea       string
-	Responsible          string
-	Abilitypatientrights int
-}
-
-// Abilitypatientrightss defines the struct for the Abilitypatientrightss
-type Abilitypatientrightss struct {
-	Abilitypatientrights []Abilitypatientrights
-}
-
-// Abilitypatientrights defines the struct for the Abilitypatientrights
-type Abilitypatientrights struct {
-	Operative       string
-	MedicalSupplies string
-	Examine         string
-}
-
-// Patientrightss defines the struct for the Patientrightss
-type Patientrightss struct {
-	Patientrights []Patientrights
-}
-
-// Patientrights defines the struct for the Patientrights
-type Patientrights struct {
-	Patientrightstype  int
-	Patientrecord      int
-	Insurance          int
-	Medicalrecordstaff int
-}
-
-// Struct By Patientrecord System
-
-//*******************************************************************
-
-// Genders defines the struct for the Genders
-type Genders struct {
-	Gender []Gender
-}
-
-// Gender defines the struct for the Gender
-type Gender struct {
-	Genderstatus string
-}
-
-// Medicalrecordstaffs defines the struct for the Medicalrecordstaffs
-type Medicalrecordstaffs struct {
-	Medicalrecordstaff []Medicalrecordstaff
-}
-
-// Medicalrecordstaff defines the struct for the Medicalrecordstaff
-type Medicalrecordstaff struct {
-	Name string
-}
-
-//*******************************************************************
-
-// Paytypes defines the struct for the Paytypes
-type Paytypes struct {
-	Paytype []Paytype
-}
-
-// Paytype defines the struct for the Paytype
-type Paytype struct {
-	paytype string
-}
-
-// Financiers defines the struct for the Financiers
-type Financiers struct {
-	Financier []Financier
-}
-
-// Financier defines the struct for the Financier
-type Financier struct {
-	name string
-}
 
 // Struct By Historytaking System
 
@@ -142,6 +57,16 @@ type Departments struct {
 // Department defines the struct for the Department
 type Department struct {
 	Department string
+}
+
+// Patientrecords defines the struct for the Patientrecords
+type Patientrecords struct {
+	Patientrecord []Patientrecord
+}
+
+// Patientrecord defines the struct for the Patientrecord
+type Patientrecord struct {
+	Name string
 }
 
 //*******************************************************************
@@ -213,25 +138,15 @@ func main() {
 
 	// Controller By Patientrights System
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	controllers.NewPatientrightsController(v1, client)
-	controllers.NewPatientrightstypeController(v1, client)
-	controllers.NewAbilitypatientrightsController(v1, client)
-	controllers.NewInsuranceController(v1, client)
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	// Controller By Patientrecord System
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	controllers.NewGenderController(v1, client)
-	controllers.NewMedicalrecordstaffController(v1, client)
 	controllers.NewPatientrecordController(v1, client)
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//Controller By Bill System
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	controllers.NewBillController(v1, client)
-	controllers.NewFinancierController(v1, client)
-	controllers.NewPaytypeController(v1, client)
-	controllers.NewUnpaybillController(v1, client)
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//Controller By Historytaking System
@@ -260,99 +175,6 @@ func main() {
 	//*******************************************************************
 
 	
-	// Set insurance Data
-	Insurance := []string{"เมืองไทยประกันภัย", "ไทยสมุทรประกันชีวิต", "อื่น ๆ ", "กรมบัญชีกลาง", "AIA"}
-	for _, r := range Insurance {
-		client.Insurance.
-			Create().
-			SetInsurancecompany(r).
-			Save(context.Background())
-	}
-
-	// Set Abilitypatientrights Data
-	Abilitypatientrights := Abilitypatientrightss{
-		Abilitypatientrights: []Abilitypatientrights{
-			Abilitypatientrights{"100", "100", "100"},
-			Abilitypatientrights{"50", "100", "100"},
-			Abilitypatientrights{"50", "100", "50"},
-		},
-	}
-
-	for _, a := range Abilitypatientrights.Abilitypatientrights {
-		client.Abilitypatientrights.
-			Create().
-			SetOperative(a.Operative).
-			SetMedicalSupplies(a.MedicalSupplies).
-			SetExamine(a.Examine).
-			Save(context.Background())
-	}
-
-	// Set Patientrightstypes Data
-	patientrightstypes := Patientrightstypes{
-		Patientrightstype: []Patientrightstype{
-			Patientrightstype{"จ่ายตรง", "ทั่วประเทศ", "ราชการ", 1},
-			Patientrightstype{"ผู้สูงอายุ", "ทั่วประเทศ", "นาย แหวง", 2},
-			Patientrightstype{"สุขภาพถ้วนหน้า", "โคราช", "ราชการ", 2},
-			Patientrightstype{"อุบัติเหตุสบายใจ", "ทั่วประเทศ", "นาย มา", 2},
-		},
-	}
-
-	for _, p := range patientrightstypes.Patientrightstype {
-
-		a, err := client.Abilitypatientrights.
-			Query().
-			Where(abilitypatientrights.IDEQ(int(p.Abilitypatientrights))).
-			Only(context.Background())
-
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-
-		client.Patientrightstype.
-			Create().
-			SetPermission(p.Permission).
-			SetPermissionArea(p.PermissionArea).
-			SetResponsible(p.Responsible).
-			SetPatientrightstypeAbilitypatientrights(a).
-			Save(context.Background())
-	}
-	//*******************************************************************
-
-	
-	// Set Postman By Patientrecord System
-	//*******************************************************************
-
-	// Set Gender Data
-	genders := Genders{
-		Gender: []Gender{
-			Gender{"ชาย"},
-			Gender{"หญิง"},
-		},
-	}
-
-	for _, g := range genders.Gender {
-		client.Gender.
-			Create().
-			SetGenderstatus(g.Genderstatus).
-			Save(context.Background())
-	}
-
-	// Set Medicalrecordstaff Data
-	medicalrecordstaffs := Medicalrecordstaffs{
-		Medicalrecordstaff: []Medicalrecordstaff{
-			Medicalrecordstaff{"Phonrawin Kudthalaeng"},
-			Medicalrecordstaff{"Shin Sura"},
-		},
-	}
-
-	for _, m := range medicalrecordstaffs.Medicalrecordstaff {
-		client.Medicalrecordstaff.
-			Create().
-			SetName(m.Name).
-			Save(context.Background())
-	}
-	//*******************************************************************
 	// Set Postman By Historytaking System
 	//*******************************************************************
 
@@ -398,38 +220,24 @@ func main() {
 			SetSymptomseverity(ss.Symptomseverity).
 			Save(context.Background())
 	}
-	//*******************************************************************
-	// Set Postman By Bill System
-	//*******************************************************************
 
-	//Set Financier data
-	financiers := Financiers{
-		Financier: []Financier{
-			Financier{"Nutchaporn Klinrod"},
-			Financier{"Name Surname"},
+	//Set Department data
+	departments := Departments{
+		Department: []Department{
+			Department{"ตาคอหู"},
+			Department{"กระดูก"},
+			Department{"อายุรกรรม"},
 		},
 	}
-	for _, f := range financiers.Financier {
-		client.Financier.
+
+	for _, d := range departments.Department {
+		client.Department.
 			Create().
-			SetName(f.name).
+			SetDepartment(d.Department).
 			Save(context.Background())
 	}
-
-	//Set Paytype data
-	paytypes := Paytypes{
-		Paytype: []Paytype{
-			Paytype{"Online Banking"},
-			Paytype{"Credit / Debit Card"},
-			Paytype{"Cash"},
-		},
-	}
-
-	for _, pt := range paytypes.Paytype {
-		client.Paytype.
-			Create().
-			SetPaytype(pt.paytype)
-	}
+	//*******************************************************************
+	
 	//-------------------------------------------------------------------
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

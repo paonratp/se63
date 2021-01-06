@@ -10,7 +10,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
 	"github.com/team10/app/ent/department"
-	"github.com/team10/app/ent/doctorinfo"
 	"github.com/team10/app/ent/historytaking"
 	"github.com/team10/app/ent/predicate"
 )
@@ -35,21 +34,6 @@ func (du *DepartmentUpdate) SetDepartment(s string) *DepartmentUpdate {
 	return du
 }
 
-// AddDepartment2doctorinfoIDs adds the department2doctorinfo edge to Doctorinfo by ids.
-func (du *DepartmentUpdate) AddDepartment2doctorinfoIDs(ids ...int) *DepartmentUpdate {
-	du.mutation.AddDepartment2doctorinfoIDs(ids...)
-	return du
-}
-
-// AddDepartment2doctorinfo adds the department2doctorinfo edges to Doctorinfo.
-func (du *DepartmentUpdate) AddDepartment2doctorinfo(d ...*Doctorinfo) *DepartmentUpdate {
-	ids := make([]int, len(d))
-	for i := range d {
-		ids[i] = d[i].ID
-	}
-	return du.AddDepartment2doctorinfoIDs(ids...)
-}
-
 // AddHistorytakingIDs adds the historytaking edge to Historytaking by ids.
 func (du *DepartmentUpdate) AddHistorytakingIDs(ids ...int) *DepartmentUpdate {
 	du.mutation.AddHistorytakingIDs(ids...)
@@ -68,21 +52,6 @@ func (du *DepartmentUpdate) AddHistorytaking(h ...*Historytaking) *DepartmentUpd
 // Mutation returns the DepartmentMutation object of the builder.
 func (du *DepartmentUpdate) Mutation() *DepartmentMutation {
 	return du.mutation
-}
-
-// RemoveDepartment2doctorinfoIDs removes the department2doctorinfo edge to Doctorinfo by ids.
-func (du *DepartmentUpdate) RemoveDepartment2doctorinfoIDs(ids ...int) *DepartmentUpdate {
-	du.mutation.RemoveDepartment2doctorinfoIDs(ids...)
-	return du
-}
-
-// RemoveDepartment2doctorinfo removes department2doctorinfo edges to Doctorinfo.
-func (du *DepartmentUpdate) RemoveDepartment2doctorinfo(d ...*Doctorinfo) *DepartmentUpdate {
-	ids := make([]int, len(d))
-	for i := range d {
-		ids[i] = d[i].ID
-	}
-	return du.RemoveDepartment2doctorinfoIDs(ids...)
 }
 
 // RemoveHistorytakingIDs removes the historytaking edge to Historytaking by ids.
@@ -182,44 +151,6 @@ func (du *DepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: department.FieldDepartment,
 		})
 	}
-	if nodes := du.mutation.RemovedDepartment2doctorinfoIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   department.Department2doctorinfoTable,
-			Columns: []string{department.Department2doctorinfoColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: doctorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := du.mutation.Department2doctorinfoIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   department.Department2doctorinfoTable,
-			Columns: []string{department.Department2doctorinfoColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: doctorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
 	if nodes := du.mutation.RemovedHistorytakingIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -282,21 +213,6 @@ func (duo *DepartmentUpdateOne) SetDepartment(s string) *DepartmentUpdateOne {
 	return duo
 }
 
-// AddDepartment2doctorinfoIDs adds the department2doctorinfo edge to Doctorinfo by ids.
-func (duo *DepartmentUpdateOne) AddDepartment2doctorinfoIDs(ids ...int) *DepartmentUpdateOne {
-	duo.mutation.AddDepartment2doctorinfoIDs(ids...)
-	return duo
-}
-
-// AddDepartment2doctorinfo adds the department2doctorinfo edges to Doctorinfo.
-func (duo *DepartmentUpdateOne) AddDepartment2doctorinfo(d ...*Doctorinfo) *DepartmentUpdateOne {
-	ids := make([]int, len(d))
-	for i := range d {
-		ids[i] = d[i].ID
-	}
-	return duo.AddDepartment2doctorinfoIDs(ids...)
-}
-
 // AddHistorytakingIDs adds the historytaking edge to Historytaking by ids.
 func (duo *DepartmentUpdateOne) AddHistorytakingIDs(ids ...int) *DepartmentUpdateOne {
 	duo.mutation.AddHistorytakingIDs(ids...)
@@ -315,21 +231,6 @@ func (duo *DepartmentUpdateOne) AddHistorytaking(h ...*Historytaking) *Departmen
 // Mutation returns the DepartmentMutation object of the builder.
 func (duo *DepartmentUpdateOne) Mutation() *DepartmentMutation {
 	return duo.mutation
-}
-
-// RemoveDepartment2doctorinfoIDs removes the department2doctorinfo edge to Doctorinfo by ids.
-func (duo *DepartmentUpdateOne) RemoveDepartment2doctorinfoIDs(ids ...int) *DepartmentUpdateOne {
-	duo.mutation.RemoveDepartment2doctorinfoIDs(ids...)
-	return duo
-}
-
-// RemoveDepartment2doctorinfo removes department2doctorinfo edges to Doctorinfo.
-func (duo *DepartmentUpdateOne) RemoveDepartment2doctorinfo(d ...*Doctorinfo) *DepartmentUpdateOne {
-	ids := make([]int, len(d))
-	for i := range d {
-		ids[i] = d[i].ID
-	}
-	return duo.RemoveDepartment2doctorinfoIDs(ids...)
 }
 
 // RemoveHistorytakingIDs removes the historytaking edge to Historytaking by ids.
@@ -426,44 +327,6 @@ func (duo *DepartmentUpdateOne) sqlSave(ctx context.Context) (d *Department, err
 			Value:  value,
 			Column: department.FieldDepartment,
 		})
-	}
-	if nodes := duo.mutation.RemovedDepartment2doctorinfoIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   department.Department2doctorinfoTable,
-			Columns: []string{department.Department2doctorinfoColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: doctorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := duo.mutation.Department2doctorinfoIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   department.Department2doctorinfoTable,
-			Columns: []string{department.Department2doctorinfoColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: doctorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if nodes := duo.mutation.RemovedHistorytakingIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

@@ -12,48 +12,16 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
-	// Abilitypatientrights is the client for interacting with the Abilitypatientrights builders.
-	Abilitypatientrights *AbilitypatientrightsClient
-	// Bill is the client for interacting with the Bill builders.
-	Bill *BillClient
 	// Department is the client for interacting with the Department builders.
 	Department *DepartmentClient
-	// Doctorinfo is the client for interacting with the Doctorinfo builders.
-	Doctorinfo *DoctorinfoClient
-	// Educationlevel is the client for interacting with the Educationlevel builders.
-	Educationlevel *EducationlevelClient
-	// Financier is the client for interacting with the Financier builders.
-	Financier *FinancierClient
-	// Gender is the client for interacting with the Gender builders.
-	Gender *GenderClient
 	// Historytaking is the client for interacting with the Historytaking builders.
 	Historytaking *HistorytakingClient
-	// Insurance is the client for interacting with the Insurance builders.
-	Insurance *InsuranceClient
-	// Medicalrecordstaff is the client for interacting with the Medicalrecordstaff builders.
-	Medicalrecordstaff *MedicalrecordstaffClient
 	// Nurse is the client for interacting with the Nurse builders.
 	Nurse *NurseClient
-	// Officeroom is the client for interacting with the Officeroom builders.
-	Officeroom *OfficeroomClient
 	// Patientrecord is the client for interacting with the Patientrecord builders.
 	Patientrecord *PatientrecordClient
-	// Patientrights is the client for interacting with the Patientrights builders.
-	Patientrights *PatientrightsClient
-	// Patientrightstype is the client for interacting with the Patientrightstype builders.
-	Patientrightstype *PatientrightstypeClient
-	// Paytype is the client for interacting with the Paytype builders.
-	Paytype *PaytypeClient
-	// Prename is the client for interacting with the Prename builders.
-	Prename *PrenameClient
 	// Symptomseverity is the client for interacting with the Symptomseverity builders.
 	Symptomseverity *SymptomseverityClient
-	// Treatment is the client for interacting with the Treatment builders.
-	Treatment *TreatmentClient
-	// Typetreatment is the client for interacting with the Typetreatment builders.
-	Typetreatment *TypetreatmentClient
-	// Unpaybill is the client for interacting with the Unpaybill builders.
-	Unpaybill *UnpaybillClient
 	// User is the client for interacting with the User builders.
 	User *UserClient
 
@@ -191,27 +159,11 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
-	tx.Abilitypatientrights = NewAbilitypatientrightsClient(tx.config)
-	tx.Bill = NewBillClient(tx.config)
 	tx.Department = NewDepartmentClient(tx.config)
-	tx.Doctorinfo = NewDoctorinfoClient(tx.config)
-	tx.Educationlevel = NewEducationlevelClient(tx.config)
-	tx.Financier = NewFinancierClient(tx.config)
-	tx.Gender = NewGenderClient(tx.config)
 	tx.Historytaking = NewHistorytakingClient(tx.config)
-	tx.Insurance = NewInsuranceClient(tx.config)
-	tx.Medicalrecordstaff = NewMedicalrecordstaffClient(tx.config)
 	tx.Nurse = NewNurseClient(tx.config)
-	tx.Officeroom = NewOfficeroomClient(tx.config)
 	tx.Patientrecord = NewPatientrecordClient(tx.config)
-	tx.Patientrights = NewPatientrightsClient(tx.config)
-	tx.Patientrightstype = NewPatientrightstypeClient(tx.config)
-	tx.Paytype = NewPaytypeClient(tx.config)
-	tx.Prename = NewPrenameClient(tx.config)
 	tx.Symptomseverity = NewSymptomseverityClient(tx.config)
-	tx.Treatment = NewTreatmentClient(tx.config)
-	tx.Typetreatment = NewTypetreatmentClient(tx.config)
-	tx.Unpaybill = NewUnpaybillClient(tx.config)
 	tx.User = NewUserClient(tx.config)
 }
 
@@ -222,7 +174,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: Abilitypatientrights.QueryXXX(), the query will be executed
+// applies a query, for example: Department.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.
