@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface ControllersHistorytaking {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ControllersHistorytaking
      */
-    bp?: number;
+    bp?: string;
     /**
      * 
      * @type {string}
@@ -39,10 +39,10 @@ export interface ControllersHistorytaking {
     department?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ControllersHistorytaking
      */
-    hight?: number;
+    hight?: string;
     /**
      * 
      * @type {number}
@@ -63,16 +63,16 @@ export interface ControllersHistorytaking {
     patientrecord?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ControllersHistorytaking
      */
-    pulse?: number;
+    pulse?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ControllersHistorytaking
      */
-    respiration?: number;
+    respiration?: string;
     /**
      * 
      * @type {string}
@@ -87,16 +87,16 @@ export interface ControllersHistorytaking {
     symptomseverity?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ControllersHistorytaking
      */
-    temp?: number;
+    temp?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ControllersHistorytaking
      */
-    weight?: number;
+    weight?: string;
 }
 
 export function ControllersHistorytakingFromJSON(json: any): ControllersHistorytaking {

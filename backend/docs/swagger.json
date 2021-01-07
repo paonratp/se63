@@ -1288,7 +1288,7 @@
             "type": "object",
             "properties": {
                 "bp": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "datetime": {
                     "type": "string"
@@ -1297,7 +1297,7 @@
                     "type": "integer"
                 },
                 "hight": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "nurse": {
                     "type": "integer"
@@ -1309,10 +1309,10 @@
                     "type": "integer"
                 },
                 "pulse": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "respiration": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "symptom": {
                     "type": "string"
@@ -1321,10 +1321,10 @@
                     "type": "integer"
                 },
                 "temp": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "weight": {
-                    "type": "number"
+                    "type": "string"
                 }
             }
         },

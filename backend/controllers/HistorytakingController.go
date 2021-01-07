@@ -26,12 +26,12 @@ type Historytaking struct {
 	Department      int
 	Symptomseverity int
 	Patientrecord   int
-	Hight           float32
-	Weight          float32
-	Temp            float32
-	Pulse           int
-	Respiration     int
-	Bp              int
+	Hight           string
+	Weight          string
+	Temp            string
+	Pulse           string
+	Respiration     string
+	Bp              string
 	Oxygen          string
 	Symptom         string
 	Datetime        string
@@ -101,7 +101,25 @@ func (ctl *HistorytakingController) CreateHistorytaking(c *gin.Context) {
 		return
 	}
 
-	times, err := time.Parse(time.RFC3339, obj.Datetime)
+	times := time.Now().Local()
+
+	var h float32
+	if hights, err := strconv.ParseFloat(obj.Hight, 64); err == nil {
+		h = float32(hights)
+	}
+
+	var w float32
+	if weights, err := strconv.ParseFloat(obj.Weight, 64); err == nil {
+		w = float32(weights)
+	}
+	var t float32
+	if temps, err := strconv.ParseFloat(obj.Temp, 64); err == nil {
+		t = float32(temps)
+	}
+
+	pulses, err := strconv.Atoi(obj.Pulse)
+	respirations, err := strconv.Atoi(obj.Respiration)
+	bps, err := strconv.Atoi(obj.Bp)
 
 	ht, err := ctl.client.Historytaking.
 		Create().
@@ -109,13 +127,13 @@ func (ctl *HistorytakingController) CreateHistorytaking(c *gin.Context) {
 		SetDepartment(d).
 		SetSymptomseverity(ss).
 		SetPatientrecord(pt).
-		SetHight(obj.Hight).
-		SetWeight(obj.Weight).
-		SetTemp(obj.Temp).
-		SetPulse(obj.Pulse).
-		SetRespiration(obj.Respiration).
-		SetBp(obj.Bp).
-		SetOxygen(obj.Oxygen).
+		SetHight(h).
+		SetWeight(w).
+		SetTemp(t).
+		SetPulse(pulses).
+		SetRespiration(respirations).
+		SetBp(bps).
+		SetOxygen(obj.Oxygen+"%").
 		SetSymptom(obj.Symptom).
 		SetDatetime(times).
 		Save(context.Background())

@@ -3,13 +3,13 @@ definitions:
   controllers.Historytaking:
     properties:
       bp:
-        type: integer
+        type: string
       datetime:
         type: string
       department:
         type: integer
       hight:
-        type: number
+        type: string
       nurse:
         type: integer
       oxygen:
@@ -17,17 +17,17 @@ definitions:
       patientrecord:
         type: integer
       pulse:
-        type: integer
+        type: string
       respiration:
-        type: integer
+        type: string
       symptom:
         type: string
       symptomseverity:
         type: integer
       temp:
-        type: number
+        type: string
       weight:
-        type: number
+        type: string
     type: object
   ent.Department:
     properties:

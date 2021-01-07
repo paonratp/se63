@@ -1303,7 +1303,7 @@ var doc = `{
             "type": "object",
             "properties": {
                 "bp": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "datetime": {
                     "type": "string"
@@ -1312,7 +1312,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "hight": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "nurse": {
                     "type": "integer"
@@ -1324,10 +1324,10 @@ var doc = `{
                     "type": "integer"
                 },
                 "pulse": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "respiration": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "symptom": {
                     "type": "string"
@@ -1336,10 +1336,10 @@ var doc = `{
                     "type": "integer"
                 },
                 "temp": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "weight": {
-                    "type": "number"
+                    "type": "string"
                 }
             }
         },
