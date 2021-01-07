@@ -22,7 +22,7 @@ import { EntNurse } from '../../api/models/EntNurse';
 import { EntSymptomseverity } from '../../api/models/EntSymptomseverity';
 import { EntDepartment} from '../../api/models/EntDepartment';
 import { EntPatientrecord } from '../../api/models/EntPatientrecord';
-import { Grid, Paper, TextField } from '@material-ui/core';
+import { Grid, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
