@@ -5,7 +5,9 @@ import SignIn from './components/SignIn'
 
 
 import  create_Patientrights from './components/create_patientrights';
-import  CreateHistorytaking from './components/edit';
+import  createHistorytaking from './components/edit';
+import  Historytaking from './components/Historytaking';
+import  tableHistorytaking from './components/tableHistorytaking';
 
 import  edit from './components/Login';
 
@@ -13,10 +15,10 @@ import  edit from './components/Login';
 export const plugin = createPlugin({
   id: 'welcome',
   register({ router }) {
-    router.registerRoute('/', CreateHistorytaking);
+    router.registerRoute('/', Historytaking);
     router.registerRoute('/watch_video', WatchVideo);
     router.registerRoute('/signin', SignIn);
     router.registerRoute('/create_Patientrights', create_Patientrights);
-    router.registerRoute('/createHistorytaking', CreateHistorytaking);
+    router.registerRoute('/createHistorytaking', createHistorytaking);
   },
 });

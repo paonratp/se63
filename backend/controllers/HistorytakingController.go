@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -133,7 +134,7 @@ func (ctl *HistorytakingController) CreateHistorytaking(c *gin.Context) {
 		SetPulse(pulses).
 		SetRespiration(respirations).
 		SetBp(bps).
-		SetOxygen(obj.Oxygen+"%").
+		SetOxygen(obj.Oxygen + "%").
 		SetSymptom(obj.Symptom).
 		SetDatetime(times).
 		Save(context.Background())
@@ -228,23 +229,57 @@ func (ctl *HistorytakingController) ListHistorytaking(c *gin.Context) {
 	c.JSON(200, historytaking)
 }
 
+// DeleteHistorytaking handles DELETE requests to delete a historytaking entity
+// @Summary Delete a historytaking entity by ID
+// @Description get historytaking by ID
+// @ID delete-historytaking
+// @Produce  json
+// @Param id path int true "Historytaking ID"
+// @Success 200 {object} gin.H
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /historytakings/{id} [delete]
+func (ctl *HistorytakingController) DeleteHistorytaking(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	err = ctl.client.Historytaking.
+		DeleteOneID(int(id)).
+		Exec(context.Background())
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{"result": fmt.Sprintf("ok deleted %v", id)})
+}
+
 // NewHistorytakingController creates and registers handles for the historytaking controller
 func NewHistorytakingController(router gin.IRouter, client *ent.Client) *HistorytakingController {
-	htc := &HistorytakingController{
+	uc := &HistorytakingController{
 		client: client,
 		router: router,
 	}
-	htc.register()
-	return htc
+
+	uc.register()
+
+	return uc
+
 }
 
-// InitHistorytakingController registers routes to the main engine
 func (ctl *HistorytakingController) register() {
-	historytaking := ctl.router.Group("/historytaking")
+	historytakings := ctl.router.Group("/historytakings")
 
-	historytaking.GET("", ctl.ListHistorytaking)
-
-	// CRUD
-	historytaking.POST("", ctl.CreateHistorytaking)
-	historytaking.GET(":id", ctl.GetHistorytaking)
+	historytakings.GET("", ctl.ListHistorytaking)
+	historytakings.POST("", ctl.CreateHistorytaking)
+	historytakings.GET(":id", ctl.GetHistorytaking)
+	historytakings.DELETE(":id", ctl.DeleteHistorytaking)
 }
