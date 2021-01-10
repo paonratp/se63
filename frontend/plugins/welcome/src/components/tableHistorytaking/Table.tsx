@@ -33,11 +33,6 @@ export default function ComponentsTable() {
    };
    getHistorytakings();
  }, [loading]);
-
-const deleteHistorytakings = async (id: number) => {
- const res = await api.deleteHistorytaking({ id: id });
- setLoading(true);
-};
  
  return (
    <TableContainer component={Paper}>
@@ -58,11 +53,12 @@ const deleteHistorytakings = async (id: number) => {
            <TableCell align="center">Department</TableCell>
            <TableCell align="center">Patient</TableCell>
            <TableCell align="center">Datetime</TableCell>
-           <TableCell align="center">Manage</TableCell> 
          </TableRow>
        </TableHead>
        <TableBody>
-         {Historytakings.map((item:any) => (
+       {Historytakings === undefined 
+          ? null
+          : Historytakings.map((item :any)=> (
            <TableRow key={item.id}>
              <TableCell align="center">{item.id}</TableCell>
              <TableCell align="center">{item.hight}</TableCell>
@@ -78,18 +74,6 @@ const deleteHistorytakings = async (id: number) => {
              <TableCell align="center">{item.edges?.department?.department}</TableCell>
              <TableCell align="center">{item.edges?.patientrecord?.name}</TableCell>
              <TableCell align="center">{item.datetime}</TableCell>
-             <TableCell align="center">
-               <Button
-                 onClick={() => {
-                  deleteHistorytakings(item.id);
-                 }}
-                 style={{ marginLeft: 10 }}
-                 variant="contained"
-                 color="secondary"
-               >
-                 DELETE
-               </Button>
-             </TableCell>
            </TableRow>
          ))}
        </TableBody>

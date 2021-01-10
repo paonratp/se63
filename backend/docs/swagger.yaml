@@ -471,36 +471,6 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a historytaking entity by ID
-  /historytakings/{id}:
-    delete:
-      description: get historytaking by ID
-      operationId: delete-historytaking
-      parameters:
-      - description: Historytaking ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/gin.H'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Delete a historytaking entity by ID
   /nurse:
     get:
       description: list nurse entities

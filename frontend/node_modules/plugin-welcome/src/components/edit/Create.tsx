@@ -451,7 +451,7 @@ const handleChange = (
                 <Button
                     style={{ marginLeft: 40 }}
                     component={RouterLink}
-                    to="/bill"
+                    to="/Historytaking"
                     variant="contained"
                 >
                     Back

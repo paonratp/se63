@@ -66,10 +66,6 @@ export interface DeleteDepartmentRequest {
     id: number;
 }
 
-export interface DeleteHistorytakingRequest {
-    id: number;
-}
-
 export interface DeleteNurseRequest {
     id: number;
 }
@@ -409,38 +405,6 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async deleteDepartment(requestParameters: DeleteDepartmentRequest): Promise<object> {
         const response = await this.deleteDepartmentRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * get historytaking by ID
-     * Delete a historytaking entity by ID
-     */
-    async deleteHistorytakingRaw(requestParameters: DeleteHistorytakingRequest): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteHistorytaking.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/historytakings/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * get historytaking by ID
-     * Delete a historytaking entity by ID
-     */
-    async deleteHistorytaking(requestParameters: DeleteHistorytakingRequest): Promise<object> {
-        const response = await this.deleteHistorytakingRaw(requestParameters);
         return await response.value();
     }
 

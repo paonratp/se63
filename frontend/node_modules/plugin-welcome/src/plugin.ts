@@ -16,8 +16,8 @@ export const plugin = createPlugin({
   id: 'welcome',
   register({ router }) {
     router.registerRoute('/', Historytaking);
-    router.registerRoute('/watch_video', WatchVideo);
-    router.registerRoute('/signin', SignIn);
+    router.registerRoute('/Historytaking', Historytaking);
+    router.registerRoute('/tableHistorytaking', tableHistorytaking);
     router.registerRoute('/create_Patientrights', create_Patientrights);
     router.registerRoute('/createHistorytaking', createHistorytaking);
   },
